@@ -4,13 +4,13 @@ import edu.ucne.registroocupaciones.data.local.OcupacionEntity
 import edu.ucne.registroocupaciones.domain.model.Ocupacion
 
 fun OcupacionEntity.toDomain() = Ocupacion(
-    OcupacionId = OcupacionId,
-    Descripcion = Descripcion,
-    Sueldo = Sueldo
+    ocupacionId = ocupacionId,
+    descripcion = descripcion,
+    sueldo = sueldo
 )
 
 fun Ocupacion.toEntity() = OcupacionEntity(
-    OcupacionId = OcupacionId,
-    Descripcion = Descripcion,
-    Sueldo = Sueldo
+    ocupacionId = ocupacionId,
+    descripcion = descripcion,
+    sueldo = sueldo
 )

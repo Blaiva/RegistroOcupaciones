@@ -10,15 +10,15 @@ interface OcupacionDao {
     @Upsert
     suspend fun upsert(entity: OcupacionEntity)
 
-    @Query("SELECT * FROM Ocupaciones ORDER BY OcupacionId DESC")
+    @Query("SELECT * FROM Ocupaciones ORDER BY ocupacionId DESC")
     fun listar(): Flow<List<OcupacionEntity>>
 
-    @Query("SELECT * FROM Ocupaciones WHERE OcupacionId = :id")
+    @Query("SELECT * FROM Ocupaciones WHERE ocupacionId = :id")
     suspend fun buscar(id: Int): OcupacionEntity?
 
-    @Query("DELETE FROM Ocupaciones WHERE OcupacionId = :id")
+    @Query("DELETE FROM Ocupaciones WHERE ocupacionId = :id")
     suspend fun eliminar(id: Int)
 
-    @Query("SELECT EXISTS(SELECT 1 FROM Ocupaciones WHERE OcupacionId = :id)")
+    @Query("SELECT EXISTS(SELECT 1 FROM Ocupaciones WHERE ocupacionId = :id)")
     suspend fun existe(id: Int): Boolean
 }
