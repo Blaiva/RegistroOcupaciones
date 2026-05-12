@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.toList
 class UpsertOcupacionUseCase(
     private val repository: OcupacionRepository
 ) {
-    suspend operator fun invoke(ocupacion: Ocupacion): Result<Unit> {
+    suspend operator fun invoke(ocupacion: Ocupacion): Result<Int> {
         val listaActual = repository.observeOcupaciones().first().map { it.descripcion }
         val descriptionResult = validarDescripcion(ocupacion.descripcion, listaActual)
         if(!descriptionResult.isValid){

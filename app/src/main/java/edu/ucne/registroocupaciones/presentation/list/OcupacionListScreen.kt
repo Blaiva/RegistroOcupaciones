@@ -40,7 +40,8 @@ import androidx.compose.material3.IconButton
 @Composable
 fun OcupacionListScreen(
     viewModel: OcupacionListViewModel = hiltViewModel(),
-    onAddOcupacion: () -> Unit
+    onAddOcupacion: () -> Unit,
+    onEditOcupacion: (Int) -> Unit
 ){
     val state by viewModel.state.collectAsStateWithLifecycle()
 }
