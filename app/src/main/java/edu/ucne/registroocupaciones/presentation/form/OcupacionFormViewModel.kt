@@ -74,24 +74,27 @@ class OcupacionFormViewModel @Inject constructor(
 
     private fun onSave()
     {
-        val descripcion = state.value.descripcion
-        val sueldoText = state.value.sueldo
-
-        val descripcionValidation = validarDescripcion(descripcion, emptyList())
-        val sueldoValidation = validarSueldo(sueldoText)
-
-        if(!descripcionValidation.isValid || !sueldoValidation.isValid)
-        {
-            _state.update{
-                it.copy(
-                    descripcionError = descripcionValidation.error,
-                    sueldoError = sueldoValidation.error
-                )
-            }
-            return
-        }
-
         viewModelScope.launch {
+            val descripcion = state.value.descripcion
+            val sueldoText = state.value.sueldo
+            val descripcionesExistentes = repository.observeOcupaciones().first()
+                .filter { it.ocupacionId != state.value.ocupacionId }
+                .map { it.descripcion }
+
+            val descripcionValidation = validarDescripcion(descripcion, descripcionesExistentes)
+            val sueldoValidation = validarSueldo(sueldoText)
+
+            if(!descripcionValidation.isValid || !sueldoValidation.isValid)
+            {
+                _state.update{
+                    it.copy(
+                        descripcionError = descripcionValidation.error,
+                        sueldoError = sueldoValidation.error
+                    )
+                }
+                return@launch
+            }
+
             _state.update { it.copy(isSaving = true) }
             val ocupacion = Ocupacion(
                 ocupacionId = state.value.ocupacionId ?: 0,

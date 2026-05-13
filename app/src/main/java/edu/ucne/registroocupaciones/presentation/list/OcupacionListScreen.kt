@@ -1,5 +1,6 @@
 package edu.ucne.registroocupaciones.presentation.list
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -44,6 +45,13 @@ fun OcupacionListScreen(
     onEditOcupacion: (Int) -> Unit
 ){
     val state by viewModel.state.collectAsStateWithLifecycle()
+
+    OcupacionListBody(
+        state = state,
+        onEvent = viewModel::onEvent,
+        onAddClick = onAddOcupacion,
+        onEditClick = onEditOcupacion
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -51,7 +59,8 @@ fun OcupacionListScreen(
 fun OcupacionListBody(
     state: OcupacionListUiState,
     onEvent: (OcupacionListUiEvent) -> Unit,
-    onAddOcupacion: () -> Unit
+    onAddClick: () -> Unit,
+    onEditClick: (Int) -> Unit
 ){
     val snackbarHostState = remember { SnackbarHostState() }
 
@@ -66,7 +75,7 @@ fun OcupacionListBody(
         snackbarHost = {SnackbarHost(snackbarHostState)},
         floatingActionButton = {
             FloatingActionButton(
-                onClick = onAddOcupacion,
+                onClick = onAddClick,
                 modifier = Modifier.testTag("fab_add")
             ){
                 Icon(
@@ -103,7 +112,8 @@ fun OcupacionListBody(
                         ){ ocupacion ->
                             OcupacionItem(
                                 ocupacion = ocupacion,
-                                onDelete = { onEvent(OcupacionListUiEvent.Delete(ocupacion.ocupacionId)) }
+                                onDelete = { onEvent(OcupacionListUiEvent.Delete(ocupacion.ocupacionId)) },
+                                onEdit = {onEditClick(ocupacion.ocupacionId)}
                             )
                         }
                     }
@@ -116,10 +126,11 @@ fun OcupacionListBody(
 @Composable
 fun OcupacionItem(
     ocupacion: Ocupacion,
-    onDelete: () -> Unit
+    onDelete: () -> Unit,
+    onEdit: () -> Unit
 ){
     ElevatedCard(
-        modifier = Modifier.fillMaxWidth().testTag("it_ocupacion_${ocupacion.ocupacionId}")
+        modifier = Modifier.fillMaxWidth().clickable{onEdit}.testTag("it_ocupacion_${ocupacion.ocupacionId}")
     ) {
         Row(
             modifier = Modifier.fillMaxWidth().padding(16.dp),
