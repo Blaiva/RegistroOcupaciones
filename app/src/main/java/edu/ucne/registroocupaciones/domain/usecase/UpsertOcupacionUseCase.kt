@@ -5,8 +5,9 @@ import edu.ucne.registroocupaciones.domain.repository.OcupacionRepository
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.toList
+import javax.inject.Inject
 
-class UpsertOcupacionUseCase(
+class UpsertOcupacionUseCase @Inject constructor(
     private val repository: OcupacionRepository
 ) {
     suspend operator fun invoke(ocupacion: Ocupacion): Result<Int> {

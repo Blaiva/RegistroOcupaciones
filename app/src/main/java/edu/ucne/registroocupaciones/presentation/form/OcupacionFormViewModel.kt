@@ -38,12 +38,23 @@ class OcupacionFormViewModel @Inject constructor(
     val state: StateFlow<OcupacionFormUiState> = _state.asStateFlow()
 
     init{
-
+        loadOcupacion(ocupacionId)
     }
 
     fun onEvent(event: OcupacionFormUiEvent)
     {
-
+        when(event)
+        {
+            is OcupacionFormUiEvent.Load -> loadOcupacion(event.id)
+            is OcupacionFormUiEvent.DescripcionChanged -> _state.update {
+                it.copy(descripcion = event.value, descripcionError = null)
+            }
+            is OcupacionFormUiEvent.SueldoChanged -> _state.update {
+                it.copy(sueldo = event.value, sueldoError = null)
+            }
+            OcupacionFormUiEvent.Save -> onSave()
+            OcupacionFormUiEvent.Delete -> onDelete()
+        }
     }
 
     private fun loadOcupacion(id: Int?)

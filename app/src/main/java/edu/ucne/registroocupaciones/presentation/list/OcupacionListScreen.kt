@@ -130,7 +130,7 @@ fun OcupacionItem(
     onEdit: () -> Unit
 ){
     ElevatedCard(
-        modifier = Modifier.fillMaxWidth().clickable{onEdit}.testTag("it_ocupacion_${ocupacion.ocupacionId}")
+        modifier = Modifier.fillMaxWidth().clickable{onEdit()}.testTag("it_ocupacion_${ocupacion.ocupacionId}")
     ) {
         Row(
             modifier = Modifier.fillMaxWidth().padding(16.dp),
