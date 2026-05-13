@@ -9,7 +9,7 @@ import edu.ucne.registroocupaciones.presentation.form.OcupacionFormScreen
 import edu.ucne.registroocupaciones.presentation.list.OcupacionListScreen
 
 @Composable
-fun TaskNavHost(
+fun OcupacionNavHost(
     navController: NavHostController = rememberNavController()
 ){
     NavHost(
