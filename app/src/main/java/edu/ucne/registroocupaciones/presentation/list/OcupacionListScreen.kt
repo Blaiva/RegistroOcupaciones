@@ -32,7 +32,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import edu.ucne.registroocupaciones.domain.model.Ocupacion
+import edu.ucne.registroocupaciones.domain.model.ocupacion.Ocupacion
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.ElevatedCard

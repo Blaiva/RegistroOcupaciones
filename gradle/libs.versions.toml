@@ -17,6 +17,8 @@ lifecycleViewmodelKtx = "2.6.2"
 navigationCompose = "2.9.8"
 roomKtx = "2.8.4"
 roomRuntime = "2.8.4"
+kotlinxDatetime = "0.8.0"
+desugar_jdk_libs = "2.1.5"
 
 [libraries]
 androidx-compose-material-icons-core = { module = "androidx.compose.material:material-icons-core" }
@@ -45,6 +47,9 @@ androidx-compose-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-te
 androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3" }
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinxCoroutinesAndroid" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinxCoroutinesCore" }
+kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinxDatetime" }
+desugar_jdk_libs = { module = "com.android.tools:desugar_jdk_libs", version.ref = "desugar_jdk_libs" }
+navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

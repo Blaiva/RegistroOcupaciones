@@ -1,6 +1,6 @@
-package edu.ucne.registroocupaciones.domain.repository
+package edu.ucne.registroocupaciones.domain.repository.ocupacion
 
-import edu.ucne.registroocupaciones.domain.model.Ocupacion
+import edu.ucne.registroocupaciones.domain.model.ocupacion.Ocupacion
 import kotlinx.coroutines.flow.Flow
 
 interface OcupacionRepository {

@@ -1,7 +1,7 @@
 package edu.ucne.registroocupaciones.domain.usecase
 
-import edu.ucne.registroocupaciones.domain.model.Ocupacion
-import edu.ucne.registroocupaciones.domain.repository.OcupacionRepository
+import edu.ucne.registroocupaciones.domain.model.ocupacion.Ocupacion
+import edu.ucne.registroocupaciones.domain.repository.ocupacion.OcupacionRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

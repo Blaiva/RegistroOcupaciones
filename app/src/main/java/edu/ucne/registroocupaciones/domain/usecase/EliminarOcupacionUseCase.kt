@@ -1,6 +1,6 @@
 package edu.ucne.registroocupaciones.domain.usecase
 
-import edu.ucne.registroocupaciones.domain.repository.OcupacionRepository
+import edu.ucne.registroocupaciones.domain.repository.ocupacion.OcupacionRepository
 import javax.inject.Inject
 
 class EliminarOcupacionUseCase @Inject constructor(private val repository: OcupacionRepository) {
