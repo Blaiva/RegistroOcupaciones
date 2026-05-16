@@ -89,7 +89,7 @@ class OcupacionRepositoryImplTest {
     }
 
     @Test
-    fun `buscar guarda ocupacion correctamente`() = runTest {
+    fun `buscar retorna ocupacion correctamente`() = runTest {
         val entity = OcupacionEntity(1, "Ocupacion Test", 30.0)
         coEvery { dao.buscar(1) } returns entity
 
