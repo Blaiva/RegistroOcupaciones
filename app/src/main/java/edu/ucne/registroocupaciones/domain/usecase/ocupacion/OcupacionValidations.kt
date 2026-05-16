@@ -1,4 +1,4 @@
-package edu.ucne.registroocupaciones.domain.usecase
+package edu.ucne.registroocupaciones.domain.usecase.ocupacion
 
 data class ValidationResult(
     val isValid: Boolean,

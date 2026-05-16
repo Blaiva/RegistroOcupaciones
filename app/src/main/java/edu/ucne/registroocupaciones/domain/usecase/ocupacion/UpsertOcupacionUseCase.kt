@@ -1,10 +1,8 @@
-package edu.ucne.registroocupaciones.domain.usecase
+package edu.ucne.registroocupaciones.domain.usecase.ocupacion
 
 import edu.ucne.registroocupaciones.domain.model.ocupacion.Ocupacion
 import edu.ucne.registroocupaciones.domain.repository.ocupacion.OcupacionRepository
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.toList
 import javax.inject.Inject
 
 class UpsertOcupacionUseCase @Inject constructor(

@@ -1,19 +1,17 @@
 package edu.ucne.registroocupaciones.presentation.form
 
-import android.R
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
 import dagger.hilt.android.lifecycle.HiltViewModel
-import edu.ucne.registroocupaciones.data.repository.ocupacion.OcupacionRepositoryImpl
 import edu.ucne.registroocupaciones.domain.model.ocupacion.Ocupacion
 import edu.ucne.registroocupaciones.domain.repository.ocupacion.OcupacionRepository
-import edu.ucne.registroocupaciones.domain.usecase.EliminarOcupacionUseCase
-import edu.ucne.registroocupaciones.domain.usecase.GetOcupacionUseCase
-import edu.ucne.registroocupaciones.domain.usecase.UpsertOcupacionUseCase
-import edu.ucne.registroocupaciones.domain.usecase.validarDescripcion
-import edu.ucne.registroocupaciones.domain.usecase.validarSueldo
+import edu.ucne.registroocupaciones.domain.usecase.ocupacion.EliminarOcupacionUseCase
+import edu.ucne.registroocupaciones.domain.usecase.ocupacion.GetOcupacionUseCase
+import edu.ucne.registroocupaciones.domain.usecase.ocupacion.UpsertOcupacionUseCase
+import edu.ucne.registroocupaciones.domain.usecase.ocupacion.validarDescripcion
+import edu.ucne.registroocupaciones.domain.usecase.ocupacion.validarSueldo
 import edu.ucne.registroocupaciones.presentation.navigation.Screen
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
