@@ -40,7 +40,7 @@ import edu.ucne.registroocupaciones.presentation.list.ocupacion.OcupacionListBod
 import edu.ucne.registroocupaciones.presentation.list.ocupacion.OcupacionListUiEvent
 
 @Composable
-fun OcupacionListScreen(
+fun EmpleadoListScreen(
     viewModel: EmpleadoListViewModel = hiltViewModel(),
     onAddEmpleado: () -> Unit,
     onEditEmpleado: (Int) -> Unit

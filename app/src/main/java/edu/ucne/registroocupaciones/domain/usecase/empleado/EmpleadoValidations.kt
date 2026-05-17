@@ -34,7 +34,7 @@ fun validarSexo(sexo: String): ValidationResult{
 
 fun validarFecha(fecha: LocalDate): ValidationResult{
     return when{
-        fecha.isAfter(LocalDate.now()) -> ValidationResult(false, "La fecha de ingreso es obligatoria")
+        fecha.isAfter(LocalDate.now()) -> ValidationResult(false, "La fecha de ingreso debe ser menor o igual a la actual")
         else -> ValidationResult(true)
     }
 }

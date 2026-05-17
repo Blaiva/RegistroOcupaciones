@@ -10,5 +10,5 @@ sealed class Screen {
     @Serializable
     data object EmpleadoList: Screen()
     @Serializable
-    data class EmpleadoForm(val empleadoId: Int): Screen()
+    data class EmpleadoForm(val empleadoId: Int = 0): Screen()
 }
