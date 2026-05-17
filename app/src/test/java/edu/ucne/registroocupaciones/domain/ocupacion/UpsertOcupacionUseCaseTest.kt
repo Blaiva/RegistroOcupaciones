@@ -1,15 +1,11 @@
 package edu.ucne.registroocupaciones.domain.ocupacion
 
-import edu.ucne.registroocupaciones.data.repository.ocupacion.OcupacionRepositoryImpl
 import edu.ucne.registroocupaciones.domain.model.ocupacion.Ocupacion
-import edu.ucne.registroocupaciones.domain.repository.empleado.EmpleadoRepository
 import edu.ucne.registroocupaciones.domain.repository.ocupacion.OcupacionRepository
 import edu.ucne.registroocupaciones.domain.usecase.ocupacion.UpsertOcupacionUseCase
-import edu.ucne.registroocupaciones.presentation.list.OcupacionItem
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
-import io.mockk.mockkClass
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.Before

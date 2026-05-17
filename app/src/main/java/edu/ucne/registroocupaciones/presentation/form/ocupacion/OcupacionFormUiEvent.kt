@@ -1,4 +1,4 @@
-package edu.ucne.registroocupaciones.presentation.form
+package edu.ucne.registroocupaciones.presentation.form.ocupacion
 
 sealed interface OcupacionFormUiEvent {
     data class Load(val id: Int?): OcupacionFormUiEvent

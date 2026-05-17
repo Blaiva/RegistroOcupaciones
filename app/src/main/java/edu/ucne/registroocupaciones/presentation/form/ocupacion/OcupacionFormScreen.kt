@@ -1,4 +1,4 @@
-package edu.ucne.registroocupaciones.presentation.form
+package edu.ucne.registroocupaciones.presentation.form.ocupacion
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -28,7 +28,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.input.KeyboardType
-import edu.ucne.registroocupaciones.presentation.list.OcupacionListUiEvent
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

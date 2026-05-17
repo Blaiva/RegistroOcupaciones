@@ -1,4 +1,4 @@
-package edu.ucne.registroocupaciones.presentation.list
+package edu.ucne.registroocupaciones.presentation.list.ocupacion
 
 sealed class OcupacionListUiEvent {
     object Load: OcupacionListUiEvent()

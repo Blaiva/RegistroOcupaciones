@@ -1,4 +1,4 @@
-package edu.ucne.registroocupaciones.presentation.form
+package edu.ucne.registroocupaciones.presentation.form.ocupacion
 
 data class OcupacionFormUiState(
     val ocupacionId: Int? = null,
