@@ -32,6 +32,7 @@ class UpsertOcupacionUseCaseTest {
     @Test
     fun`invoke guarda tarea con datos validos`() = runTest {
         val ocupacion = Ocupacion(ocupacionId = 0, descripcion = "", sueldo = 30000.0)
+        coEvery { repository.observeOcupaciones() } returns flowOf(emptyList())
         coEvery { repository.upsert(ocupacion) } returns 1
 
         val result = useCase(ocupacion)
@@ -44,6 +45,7 @@ class UpsertOcupacionUseCaseTest {
     @Test
     fun `invoke falla con descripcion vacia`() = runTest {
         val ocupacion = Ocupacion(ocupacionId = 0, descripcion = "", sueldo = 30000.0)
+        coEvery { repository.observeOcupaciones() } returns flowOf(emptyList())
 
         val result = useCase(ocupacion)
 
@@ -54,6 +56,7 @@ class UpsertOcupacionUseCaseTest {
     @Test
     fun `invoke falla con descripcion muy corta`() = runTest {
         val ocupacion = Ocupacion(ocupacionId = 0,  descripcion = "ab", sueldo = 30000.0)
+        coEvery { repository.observeOcupaciones() } returns flowOf(emptyList())
 
         val result = useCase(ocupacion)
 
@@ -77,6 +80,7 @@ class UpsertOcupacionUseCaseTest {
     @Test
     fun `invoke falla con sueldo inavlido`() = runTest {
         val ocupacion = Ocupacion(ocupacionId = 0, descripcion = "Test Ocupacion", sueldo = -5000.0)
+        coEvery { repository.observeOcupaciones() } returns flowOf(emptyList())
 
         val result = useCase(ocupacion)
 
