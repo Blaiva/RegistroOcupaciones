@@ -7,8 +7,9 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import edu.ucne.registroocupaciones.data.database.OcupacionDb
-import edu.ucne.registroocupaciones.data.local.OcupacionDao
+import edu.ucne.registroocupaciones.data.database.RegistroDb
+import edu.ucne.registroocupaciones.data.local.empleado.EmpleadoDao
+import edu.ucne.registroocupaciones.data.local.ocupacion.OcupacionDao
 import javax.inject.Singleton
 
 @Module
@@ -16,17 +17,25 @@ import javax.inject.Singleton
 object DatabaseModule {
     @Provides
     @Singleton
-    fun provideOcupacionDb(@ApplicationContext context: Context): OcupacionDb
+    fun provideRegistroDb(@ApplicationContext context: Context): RegistroDb
     {
         return Room.databaseBuilder(
-            context, OcupacionDb::class.java, "ocupacion_db"
-        ).build()
+            context, RegistroDb::class.java, "ocupacion_db"
+        ).fallbackToDestructiveMigration().build()
+
     }
 
     @Provides
     @Singleton
-    fun provideOcupacionDao(database: OcupacionDb): OcupacionDao
+    fun provideOcupacionDao(database: RegistroDb): OcupacionDao
     {
         return database.ocupacionDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideEmpleadoDao(database: RegistroDb): EmpleadoDao
+    {
+        return database.empleadoDao()
     }
 }
