@@ -48,7 +48,7 @@ class EmpleadoFormViewModelTest {
         getEmpleadoUseCase = mockk()
         upsertEmpleadoUseCase = mockk()
         eliminarEmpleadoUseCase = mockk()
-        savedStateHandle = mockk()
+        savedStateHandle = mockk(relaxed = true)
     }
 
     @After
