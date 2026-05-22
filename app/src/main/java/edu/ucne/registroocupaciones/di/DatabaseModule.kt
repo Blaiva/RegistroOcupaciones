@@ -9,7 +9,9 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import edu.ucne.registroocupaciones.data.database.RegistroDb
 import edu.ucne.registroocupaciones.data.local.empleado.EmpleadoDao
+import edu.ucne.registroocupaciones.data.local.horaextra.HoraExtraDao
 import edu.ucne.registroocupaciones.data.local.ocupacion.OcupacionDao
+import edu.ucne.registroocupaciones.domain.model.horaextra.HoraExtra
 import javax.inject.Singleton
 
 @Module
@@ -22,7 +24,6 @@ object DatabaseModule {
         return Room.databaseBuilder(
             context, RegistroDb::class.java, "ocupacion_db"
         ).fallbackToDestructiveMigration().build()
-
     }
 
     @Provides
@@ -37,5 +38,11 @@ object DatabaseModule {
     fun provideEmpleadoDao(database: RegistroDb): EmpleadoDao
     {
         return database.empleadoDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideHoraExtraDao(database: RegistroDb): HoraExtraDao{
+        return database.horaExtraDao()
     }
 }
