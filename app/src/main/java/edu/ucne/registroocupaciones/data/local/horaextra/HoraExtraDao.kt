@@ -10,10 +10,10 @@ interface HoraExtraDao {
     @Upsert
     suspend fun upsert(entity: HoraExtraEntity)
 
-    @Query("SELECT * FROM horas_extras ORDER BY horaExtraid DESC")
+    @Query("SELECT * FROM horas_extras ORDER BY horaExtraId DESC")
     fun listar(): Flow<List<HoraExtraEntity>>
 
-    @Query("SELECT * FROM horas_extras WHERE horaExtraid = :id")
+    @Query("SELECT * FROM horas_extras WHERE horaExtraId = :id")
     suspend fun buscar(id: Int): HoraExtraEntity?
 
     @Query("DELETE FROM empleados WHERE empleadoId = :id")
