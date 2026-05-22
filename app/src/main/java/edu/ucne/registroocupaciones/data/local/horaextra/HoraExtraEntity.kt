@@ -8,7 +8,7 @@ import java.time.LocalDate
 data class HoraExtraEntity(
     @PrimaryKey(autoGenerate = true)
     val horaExtraid: Int,
-    val ocupacionId: Int,
+    val empleadoId: Int,
     val fecha: LocalDate,
     val cantidadHoras: Int,
     val tipo: TipoHoraExtra,
