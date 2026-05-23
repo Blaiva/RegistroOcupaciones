@@ -14,12 +14,3 @@ fun validarDescripcion(descripcion: String, ocupacionesExistentes: List<String>)
         else -> ValidationResult(true)
     }
 }
-
-fun validarSueldo(sueldo: String): ValidationResult{
-    return when{
-        sueldo.isBlank() -> ValidationResult(false, "El sueldo es obligatorio")
-        sueldo.toDoubleOrNull() == null -> ValidationResult(false, "El sueldo debe ser un numero")
-        sueldo.toDouble() <= 0 -> ValidationResult(false, "El sueldo debe ser mayor a 0")
-        else -> ValidationResult(true)
-    }
-}
