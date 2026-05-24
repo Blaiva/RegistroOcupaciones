@@ -111,7 +111,6 @@ fun OcupacionListBody(
                         ){ ocupacion ->
                             OcupacionItem(
                                 ocupacion = ocupacion,
-                                onDelete = { onEvent(OcupacionListUiEvent.Delete(ocupacion.ocupacionId)) },
                                 onEdit = {onEditClick(ocupacion.ocupacionId)}
                             )
                         }
@@ -125,7 +124,6 @@ fun OcupacionListBody(
 @Composable
 fun OcupacionItem(
     ocupacion: Ocupacion,
-    onDelete: () -> Unit,
     onEdit: () -> Unit
 ){
     ElevatedCard(
@@ -143,21 +141,13 @@ fun OcupacionItem(
                     style = MaterialTheme.typography.bodyLarge
                 )
 
-                Text(
-                    text = "RD$${ocupacion.sueldo}",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.primary
-                )
-            }
-
-            IconButton(
-                onClick = onDelete,
-                modifier = Modifier.testTag("btn_eliminar_${ocupacion.ocupacionId}")
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Delete,
-                    contentDescription = "Eliminar ocupacion"
-                )
+                if (ocupacion.esPuestoDireccion){
+                    Text(
+                        text = "Puesto de Direccion",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.primary
+                    )
+                }
             }
         }
     }

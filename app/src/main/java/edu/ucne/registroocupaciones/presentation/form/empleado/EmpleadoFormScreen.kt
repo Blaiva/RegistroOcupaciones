@@ -57,7 +57,9 @@ fun EmpleadoFormScreen(
 
     var showDatePicker by remember { mutableStateOf(false) }
     var datePickerState = rememberDatePickerState()
-    var menuExpanded by remember { mutableStateOf(false) }
+    var sexoExpanded by remember { mutableStateOf(false) }
+    var ocupacionExpanded by remember { mutableStateOf(false) }
+    var frecuenciaPagoExpanded by remember { mutableStateOf(false) }
 
     LaunchedEffect(state.saved, state.deleted) {
         if (state.saved || state.deleted){
@@ -80,15 +82,15 @@ fun EmpleadoFormScreen(
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             ExposedDropdownMenuBox(
-                expanded = menuExpanded,
-                onExpandedChange = { menuExpanded = !menuExpanded }
+                expanded = ocupacionExpanded,
+                onExpandedChange = { ocupacionExpanded = !ocupacionExpanded }
             ) {
                 OutlinedTextField(
                     value = state.descripcionOcupacion,
                     onValueChange = {},
                     readOnly = true,
                     label = { Text("Ocupación") },
-                    trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = menuExpanded) },
+                    trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = ocupacionExpanded) },
                     modifier = Modifier
                         .fillMaxWidth()
                         .menuAnchor()
@@ -98,8 +100,8 @@ fun EmpleadoFormScreen(
                 )
 
                 ExposedDropdownMenu(
-                    expanded = menuExpanded,
-                    onDismissRequest = { menuExpanded = false }
+                    expanded = ocupacionExpanded,
+                    onDismissRequest = { ocupacionExpanded = false }
                 ) {
                     if (state.ocupaciones.isEmpty()) {
                         DropdownMenuItem(
@@ -114,7 +116,7 @@ fun EmpleadoFormScreen(
                                 onClick = {
                                     viewModel.onEvent(EmpleadoFormUiEvent.OcupacionChanged(ocupacion.ocupacionId.toString()))
                                     viewModel.onEvent(EmpleadoFormUiEvent.DescripcionOcupacionChanged(ocupacion.descripcion))
-                                    menuExpanded = false
+                                    ocupacionExpanded = false
                                 }
                             )
                         }
@@ -175,29 +177,29 @@ fun EmpleadoFormScreen(
 
             val opcionesSexo = listOf("Masculino", "Femenino")
             ExposedDropdownMenuBox(
-                expanded = menuExpanded,
-                onExpandedChange = {menuExpanded = !menuExpanded}
+                expanded = sexoExpanded,
+                onExpandedChange = {sexoExpanded = !sexoExpanded}
             ) {
                 OutlinedTextField(
                     value = state.sexo,
                     onValueChange = {},
                     readOnly = true,
                     label = {Text("Sexo")},
-                    trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = menuExpanded)},
+                    trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = sexoExpanded)},
                     modifier = Modifier.fillMaxWidth().menuAnchor().testTag("input_sexo"),
                     isError = state.sexoError != null,
                     supportingText = state.sexoError?.let { errorMsg -> {Text(errorMsg)} }
                 )
                 ExposedDropdownMenu(
-                    expanded = menuExpanded,
-                    onDismissRequest = {menuExpanded = false}
+                    expanded = sexoExpanded,
+                    onDismissRequest = {sexoExpanded = false}
                 ) {
                     opcionesSexo.forEach { opcion ->
                         DropdownMenuItem(
                             text = {Text(opcion)},
                             onClick = {
                                 viewModel.onEvent(EmpleadoFormUiEvent.SexoChanged(opcion))
-                                menuExpanded = false
+                                sexoExpanded = false
                             }
                         )
                     }
@@ -217,15 +219,15 @@ fun EmpleadoFormScreen(
 
             val opcionesFrecuencia = FrecuenciaPago.entries
             ExposedDropdownMenuBox(
-                expanded = menuExpanded,
-                onExpandedChange = { menuExpanded = !menuExpanded }
+                expanded = frecuenciaPagoExpanded,
+                onExpandedChange = { frecuenciaPagoExpanded = !frecuenciaPagoExpanded }
             ) {
                 OutlinedTextField(
                     value = state.frecuenciaPago.descripcion,
                     onValueChange = {},
                     readOnly = true,
                     label = { Text("Frecuencia de Pago") },
-                    trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = menuExpanded) },
+                    trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = frecuenciaPagoExpanded) },
                     modifier = Modifier
                         .fillMaxWidth()
                         .menuAnchor()
@@ -234,15 +236,15 @@ fun EmpleadoFormScreen(
                     supportingText = state.frecuenciaPagoError?.let { errorMsg -> { Text(errorMsg) } }
                 )
                 ExposedDropdownMenu(
-                    expanded = menuExpanded,
-                    onDismissRequest = { menuExpanded = false }
+                    expanded = frecuenciaPagoExpanded,
+                    onDismissRequest = { frecuenciaPagoExpanded = false }
                 ) {
                     opcionesFrecuencia.forEach { opcion ->
                         DropdownMenuItem(
                             text = { Text(opcion.descripcion) },
                             onClick = {
                                 viewModel.onEvent(EmpleadoFormUiEvent.FrecuenciaPagoChanged(opcion))
-                                menuExpanded = false
+                                frecuenciaPagoExpanded = false
                             }
                         )
                     }
@@ -265,7 +267,7 @@ fun EmpleadoFormScreen(
                 }
             }
 
-            if (state.isNew) {
+            if (!state.isNew) {
                 Button(
                     onClick = { viewModel.onEvent(EmpleadoFormUiEvent.Delete) },
                     modifier = Modifier

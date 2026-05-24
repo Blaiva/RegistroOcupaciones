@@ -3,7 +3,6 @@ package edu.ucne.registroocupaciones.presentation.list.ocupacion
 sealed class OcupacionListUiEvent {
     object Load: OcupacionListUiEvent()
     object Refresh: OcupacionListUiEvent()
-    data class Delete(val id: Int): OcupacionListUiEvent()
     data class ShowMessage(val message: String): OcupacionListUiEvent()
     object ClearMessage: OcupacionListUiEvent()
     object CreateNew: OcupacionListUiEvent()

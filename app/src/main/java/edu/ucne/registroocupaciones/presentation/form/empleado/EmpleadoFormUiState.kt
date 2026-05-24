@@ -12,7 +12,7 @@ data class EmpleadoFormUiState (
     val nombres: String = "",
     val sexo: String = "",
     val sueldo: String = "",
-    val frecuenciaPago: FrecuenciaPago = FrecuenciaPago.SEMANAL,
+    val frecuenciaPago: FrecuenciaPago = FrecuenciaPago.MENSUAL,
     val ocupaciones: List<Ocupacion> = emptyList(),
     val ocupacionError: String? = null,
     val fechaIngresoError: String? = null,

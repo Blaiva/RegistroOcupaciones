@@ -23,6 +23,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -77,12 +79,14 @@ class EmpleadoFormViewModel @Inject constructor(
 
         viewModelScope.launch {
             val empleado = getEmpleadoUseCase(id)
+            val ocupaciones = observeOcupacionesUseCase().first()
             if(empleado != null){
                 _state.update {
                     it.copy(
                         isNew = false,
                         empleadoId = empleado.empleadoId,
                         ocupacionId = empleado.ocupacionId.toString(),
+                        descripcionOcupacion = (ocupaciones.find { it.ocupacionId == empleado.ocupacionId })?.descripcion ?: "",
                         fechaIngreso = empleado.fechaIngreso,
                         nombres = empleado.nombres,
                         sexo = empleado.sexo,

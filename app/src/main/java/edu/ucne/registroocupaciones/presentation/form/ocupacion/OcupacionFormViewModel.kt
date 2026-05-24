@@ -11,7 +11,6 @@ import edu.ucne.registroocupaciones.domain.usecase.ocupacion.EliminarOcupacionUs
 import edu.ucne.registroocupaciones.domain.usecase.ocupacion.GetOcupacionUseCase
 import edu.ucne.registroocupaciones.domain.usecase.ocupacion.UpsertOcupacionUseCase
 import edu.ucne.registroocupaciones.domain.usecase.ocupacion.validarDescripcion
-import edu.ucne.registroocupaciones.domain.usecase.ocupacion.validarSueldo
 import edu.ucne.registroocupaciones.presentation.navigation.Screen
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -47,8 +46,8 @@ class OcupacionFormViewModel @Inject constructor(
             is OcupacionFormUiEvent.DescripcionChanged -> _state.update {
                 it.copy(descripcion = event.value, descripcionError = null)
             }
-            is OcupacionFormUiEvent.SueldoChanged -> _state.update {
-                it.copy(sueldo = event.value, sueldoError = null)
+            is OcupacionFormUiEvent.esPuestoDireccionChanged -> _state.update {
+                it.copy(esPuestoDireccion = event.value)
             }
             OcupacionFormUiEvent.Save -> onSave()
             OcupacionFormUiEvent.Delete -> onDelete()
@@ -71,7 +70,7 @@ class OcupacionFormViewModel @Inject constructor(
                         isNew = false,
                         ocupacionId = ocupacion.ocupacionId,
                         descripcion = ocupacion.descripcion,
-                        sueldo = ocupacion.sueldo.toString()
+                        esPuestoDireccion = ocupacion.esPuestoDireccion
                     )
                 }
             }else
@@ -85,20 +84,17 @@ class OcupacionFormViewModel @Inject constructor(
     {
         viewModelScope.launch {
             val descripcion = state.value.descripcion
-            val sueldoText = state.value.sueldo
             val descripcionesExistentes = repository.observeOcupaciones().first()
                 .filter { it.ocupacionId != state.value.ocupacionId }
                 .map { it.descripcion }
 
             val descripcionValidation = validarDescripcion(descripcion, descripcionesExistentes)
-            val sueldoValidation = validarSueldo(sueldoText)
 
-            if(!descripcionValidation.isValid || !sueldoValidation.isValid)
+            if(!descripcionValidation.isValid)
             {
                 _state.update{
                     it.copy(
                         descripcionError = descripcionValidation.error,
-                        sueldoError = sueldoValidation.error
                     )
                 }
                 return@launch
@@ -108,7 +104,7 @@ class OcupacionFormViewModel @Inject constructor(
             val ocupacion = Ocupacion(
                 ocupacionId = state.value.ocupacionId ?: 0,
                 descripcion = descripcion,
-                sueldo = sueldoText.toDouble()
+                esPuestoDireccion = state.value.esPuestoDireccion
             )
 
             val result = upsertOcupacionUseCase(ocupacion)
