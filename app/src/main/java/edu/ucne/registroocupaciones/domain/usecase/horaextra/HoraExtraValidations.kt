@@ -1,5 +1,6 @@
 package edu.ucne.registroocupaciones.domain.usecase.horaextra
 
+import edu.ucne.registroocupaciones.data.local.horaextra.TipoHoraExtra
 import edu.ucne.registroocupaciones.domain.usecase.empleado.ValidationResult
 import java.time.LocalDate
 
@@ -31,9 +32,10 @@ fun validarCantidadHoras(cantidadHoras: String): ValidationResult{
     }
 }
 
-fun validarTipoHoraExtra(tipoHoraExtra: String): ValidationResult{
+fun validarTipoHoraExtra(tipoHoraExtra: String, cantidadHoras: Int): ValidationResult{
     return when{
         tipoHoraExtra.isBlank() -> ValidationResult(false, "El tipo de hora extra es obligatoria")
+        tipoHoraExtra != TipoHoraExtra.ALTO_VOLUMEN.descripcion && cantidadHoras > 24 -> ValidationResult(false, "El tipo debe ser Alto Volumen, la cantidad de horas supera las 24 horas semanales")
         else -> ValidationResult(true)
     }
 }

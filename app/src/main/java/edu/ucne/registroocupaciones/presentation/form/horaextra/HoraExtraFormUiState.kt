@@ -11,7 +11,6 @@ data class HoraExtraFormUiState (
     val fecha: LocalDate = LocalDate.now(),
     val cantidadHoras: String = "",
     val tipo: TipoHoraExtra = TipoHoraExtra.DIURNO,
-    val recargo: Double = 0.0,
     val empleados: List<Empleado> = emptyList(),
     val empleadoError: String? = null,
     val fechaError: String? = null,

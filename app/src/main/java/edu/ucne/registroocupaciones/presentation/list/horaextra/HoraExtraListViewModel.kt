@@ -2,6 +2,7 @@ package edu.ucne.registroocupaciones.presentation.list.horaextra
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import edu.ucne.registroocupaciones.domain.usecase.empleado.ListarEmpleadoUseCase
 import edu.ucne.registroocupaciones.domain.usecase.horaextra.ListarHoraExtraUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -12,6 +13,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@HiltViewModel
 class HoraExtraListViewModel @Inject constructor(
     private val observeHoraExtraUseCase: ListarHoraExtraUseCase,
     private val observeEmpleadoUseCase: ListarEmpleadoUseCase

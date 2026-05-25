@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Icon
@@ -37,7 +38,8 @@ class MainActivity : ComponentActivity() {
                 val navController = rememberNavController()
                 val items = listOf(
                     TopLevelRoute("Empleado", Screen.EmpleadoList, Icons.Default.Person),
-                    TopLevelRoute("Ocupacion", Screen.OcupacionList, Icons.Default.Home)
+                    TopLevelRoute("Ocupacion", Screen.OcupacionList, Icons.Default.Home),
+                    TopLevelRoute("Horas Extra", Screen.HoraExtraList, Icons.Default.DateRange)
                 )
                 Scaffold(
                     bottomBar = {

@@ -22,7 +22,7 @@ class UpsertHoraExtraUseCase @Inject constructor(private val repository: HoraExt
             return Result.failure(IllegalArgumentException(fechaResult.error))
         }
 
-        val tipoHoraExtraResult = validarTipoHoraExtra(horaExtra.tipo.descripcion)
+        val tipoHoraExtraResult = validarTipoHoraExtra(horaExtra.tipo.descripcion, horaExtra.cantidadHoras)
         if(!tipoHoraExtraResult.isValid){
             return Result.failure(IllegalArgumentException(tipoHoraExtraResult.error))
         }

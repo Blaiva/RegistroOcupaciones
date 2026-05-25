@@ -34,6 +34,6 @@ class Converters {
 
     @TypeConverter
     fun tipoHoraExtraToString(value: TipoHoraExtra): String{
-        return value.descripcion
+        return value.name
     }
 }
