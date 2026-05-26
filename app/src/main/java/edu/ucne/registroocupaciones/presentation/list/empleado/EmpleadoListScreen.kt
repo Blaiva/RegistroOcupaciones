@@ -108,8 +108,8 @@ fun EmpleadoListBody(
                         ){ empleado ->
                             EmpleadoItem(
                                 empleado = empleado,
-                                onDelete = {onEvent(EmpleadoListUiEvent.Delete(empleado.empleadoId))},
-                                onEdit = {onEditClick(empleado.empleadoId)}
+                                onEdit = {onEditClick(empleado.empleadoId)},
+                                state = state
                             )
                         }
                     }
@@ -122,8 +122,8 @@ fun EmpleadoListBody(
 @Composable
 fun EmpleadoItem(
     empleado: Empleado,
-    onDelete: () -> Unit,
-    onEdit: () -> Unit
+    onEdit: () -> Unit,
+    state: EmpleadoListUiState
 ) {
     ElevatedCard(modifier = Modifier.fillMaxWidth().clickable{onEdit()}) {
         Row(
@@ -142,6 +142,11 @@ fun EmpleadoItem(
                 )
 
                 Text(
+                    text = (state.ocupaciones.find { it.ocupacionId == empleado.ocupacionId })?.descripcion ?: "",
+                    style = MaterialTheme.typography.bodyMedium
+                )
+
+                Text(
                     text = empleado.fechaIngreso.toString(),
                     style = MaterialTheme.typography.bodyMedium
                 )
@@ -151,15 +156,10 @@ fun EmpleadoItem(
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.primary
                 )
-            }
 
-            IconButton(
-                onClick = onDelete,
-                modifier = Modifier.testTag("btn_eliminar_${empleado.empleadoId}")
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Delete,
-                    contentDescription = "Eliminar empleado"
+                Text(
+                    text = empleado.frecuenciaPago.descripcion,
+                    style = MaterialTheme.typography.bodyMedium
                 )
             }
         }

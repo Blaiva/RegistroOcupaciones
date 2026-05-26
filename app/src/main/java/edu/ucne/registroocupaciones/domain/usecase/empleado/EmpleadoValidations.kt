@@ -1,5 +1,6 @@
 package edu.ucne.registroocupaciones.domain.usecase.empleado
 
+import edu.ucne.registroocupaciones.data.local.horaextra.TipoHoraExtra
 import java.time.LocalDate
 
 data class ValidationResult(
@@ -35,6 +36,20 @@ fun validarSexo(sexo: String): ValidationResult{
 fun validarFecha(fecha: LocalDate): ValidationResult{
     return when{
         fecha.isAfter(LocalDate.now()) -> ValidationResult(false, "La fecha de ingreso debe ser menor o igual a la actual")
+        else -> ValidationResult(true)
+    }
+}
+
+fun validarOcupacion(ocupacionId: String): ValidationResult{
+    return when{
+        ocupacionId.isBlank() -> ValidationResult(false, "La ocupacion es obligatoria")
+        else -> ValidationResult(true)
+    }
+}
+
+fun validarFrecuenciaPago(frecuenciaPago: String): ValidationResult {
+    return when {
+        frecuenciaPago.isBlank() -> ValidationResult(false, "La frecuencia de pago es obligatoria")
         else -> ValidationResult(true)
     }
 }

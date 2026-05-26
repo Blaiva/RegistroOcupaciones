@@ -14,6 +14,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
@@ -42,6 +43,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import edu.ucne.registroocupaciones.data.local.empleado.FrecuenciaPago
 import java.time.Instant
 import java.time.ZoneId
 
@@ -55,7 +57,9 @@ fun EmpleadoFormScreen(
 
     var showDatePicker by remember { mutableStateOf(false) }
     var datePickerState = rememberDatePickerState()
-    var menuExpanded by remember { mutableStateOf(false) }
+    var sexoExpanded by remember { mutableStateOf(false) }
+    var ocupacionExpanded by remember { mutableStateOf(false) }
+    var frecuenciaPagoExpanded by remember { mutableStateOf(false) }
 
     LaunchedEffect(state.saved, state.deleted) {
         if (state.saved || state.deleted){
@@ -77,6 +81,49 @@ fun EmpleadoFormScreen(
             modifier = Modifier.fillMaxSize().padding(padding).padding(16.dp).verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
+            ExposedDropdownMenuBox(
+                expanded = ocupacionExpanded,
+                onExpandedChange = { ocupacionExpanded = !ocupacionExpanded }
+            ) {
+                OutlinedTextField(
+                    value = state.descripcionOcupacion,
+                    onValueChange = {},
+                    readOnly = true,
+                    label = { Text("Ocupación") },
+                    trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = ocupacionExpanded) },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .menuAnchor()
+                        .testTag("input_ocupacion"),
+                    isError = state.ocupacionError != null,
+                    supportingText = state.ocupacionError?.let { errorMsg -> { Text(errorMsg) } }
+                )
+
+                ExposedDropdownMenu(
+                    expanded = ocupacionExpanded,
+                    onDismissRequest = { ocupacionExpanded = false }
+                ) {
+                    if (state.ocupaciones.isEmpty()) {
+                        DropdownMenuItem(
+                            text = { Text("Cargando ocupaciones...") },
+                            onClick = { },
+                            enabled = false
+                        )
+                    } else {
+                        state.ocupaciones.forEach { ocupacion ->
+                            DropdownMenuItem(
+                                text = { Text(ocupacion.descripcion) },
+                                onClick = {
+                                    viewModel.onEvent(EmpleadoFormUiEvent.OcupacionChanged(ocupacion.ocupacionId.toString()))
+                                    viewModel.onEvent(EmpleadoFormUiEvent.DescripcionOcupacionChanged(ocupacion.descripcion))
+                                    ocupacionExpanded = false
+                                }
+                            )
+                        }
+                    }
+                }
+            }
+
             OutlinedTextField(
                 value = state.fechaIngreso.toString(),
                 onValueChange = { },
@@ -130,29 +177,29 @@ fun EmpleadoFormScreen(
 
             val opcionesSexo = listOf("Masculino", "Femenino")
             ExposedDropdownMenuBox(
-                expanded = menuExpanded,
-                onExpandedChange = {menuExpanded = !menuExpanded}
+                expanded = sexoExpanded,
+                onExpandedChange = {sexoExpanded = !sexoExpanded}
             ) {
                 OutlinedTextField(
                     value = state.sexo,
                     onValueChange = {},
                     readOnly = true,
                     label = {Text("Sexo")},
-                    trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = menuExpanded)},
+                    trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = sexoExpanded)},
                     modifier = Modifier.fillMaxWidth().menuAnchor().testTag("input_sexo"),
                     isError = state.sexoError != null,
                     supportingText = state.sexoError?.let { errorMsg -> {Text(errorMsg)} }
                 )
                 ExposedDropdownMenu(
-                    expanded = menuExpanded,
-                    onDismissRequest = {menuExpanded = false}
+                    expanded = sexoExpanded,
+                    onDismissRequest = {sexoExpanded = false}
                 ) {
                     opcionesSexo.forEach { opcion ->
                         DropdownMenuItem(
                             text = {Text(opcion)},
                             onClick = {
                                 viewModel.onEvent(EmpleadoFormUiEvent.SexoChanged(opcion))
-                                menuExpanded = false
+                                sexoExpanded = false
                             }
                         )
                     }
@@ -170,6 +217,40 @@ fun EmpleadoFormScreen(
                 singleLine = true
             )
 
+            val opcionesFrecuencia = FrecuenciaPago.entries
+            ExposedDropdownMenuBox(
+                expanded = frecuenciaPagoExpanded,
+                onExpandedChange = { frecuenciaPagoExpanded = !frecuenciaPagoExpanded }
+            ) {
+                OutlinedTextField(
+                    value = state.frecuenciaPago.descripcion,
+                    onValueChange = {},
+                    readOnly = true,
+                    label = { Text("Frecuencia de Pago") },
+                    trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = frecuenciaPagoExpanded) },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .menuAnchor()
+                        .testTag("input_frecuencia_pago"),
+                    isError = state.frecuenciaPagoError != null,
+                    supportingText = state.frecuenciaPagoError?.let { errorMsg -> { Text(errorMsg) } }
+                )
+                ExposedDropdownMenu(
+                    expanded = frecuenciaPagoExpanded,
+                    onDismissRequest = { frecuenciaPagoExpanded = false }
+                ) {
+                    opcionesFrecuencia.forEach { opcion ->
+                        DropdownMenuItem(
+                            text = { Text(opcion.descripcion) },
+                            onClick = {
+                                viewModel.onEvent(EmpleadoFormUiEvent.FrecuenciaPagoChanged(opcion))
+                                frecuenciaPagoExpanded = false
+                            }
+                        )
+                    }
+                }
+            }
+
             Button(
                 onClick = {viewModel.onEvent(EmpleadoFormUiEvent.Save)},
                 modifier = Modifier.fillMaxWidth().testTag("btn_save"),
@@ -185,6 +266,31 @@ fun EmpleadoFormScreen(
                     Text("Guardar")
                 }
             }
+
+            if (!state.isNew) {
+                Button(
+                    onClick = { viewModel.onEvent(EmpleadoFormUiEvent.Delete) },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .testTag("btn_delete"),
+                    enabled = !state.isDeleting,
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = MaterialTheme.colorScheme.error,
+                        contentColor = MaterialTheme.colorScheme.onError
+                    )
+                ) {
+                    if (state.isDeleting) {
+                        CircularProgressIndicator(
+                            modifier = Modifier.size(24.dp),
+                            color = MaterialTheme.colorScheme.onError,
+                            strokeWidth = 2.dp
+                        )
+                    } else {
+                        Text("Eliminar")
+                    }
+                }
+            }
+
         }
     }
 }

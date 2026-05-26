@@ -16,7 +16,6 @@ import javax.inject.Inject
 @HiltViewModel
 class OcupacionListViewModel @Inject constructor(
     private val observeOcupacionesUseCase: ListarOcupacionesUseCase,
-    private val deleteOcupacionesUseCase: EliminarOcupacionUseCase
 ): ViewModel(){
     private val _state = MutableStateFlow(OcupacionListUiState(isLoading = true))
     val state: StateFlow<OcupacionListUiState> = _state.asStateFlow()
@@ -29,7 +28,6 @@ class OcupacionListViewModel @Inject constructor(
         when(event){
             OcupacionListUiEvent.Load -> loadOcupaciones()
             OcupacionListUiEvent.Refresh -> loadOcupaciones()
-            is OcupacionListUiEvent.Delete -> onDelete(event.id)
             is OcupacionListUiEvent.ShowMessage -> _state.update { it.copy(message = event.message) }
             OcupacionListUiEvent.ClearMessage -> _state.update { it.copy(message = null) }
             OcupacionListUiEvent.CreateNew -> _state.update { it.copy(navigateToCreate = true) }
@@ -42,13 +40,6 @@ class OcupacionListViewModel @Inject constructor(
         viewModelScope.launch {
             _state.update { it.copy(isLoading = true) }
             observeOcupacionesUseCase().collectLatest { list -> _state.update { it.copy(isLoading = false, ocupaciones = list, message = null) } }
-        }
-    }
-
-    private fun onDelete(id: Int){
-        viewModelScope.launch {
-            deleteOcupacionesUseCase(id)
-            onEvent(OcupacionListUiEvent.ShowMessage("Eliminado"))
         }
     }
 }

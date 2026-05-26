@@ -2,14 +2,20 @@ package edu.ucne.registroocupaciones.presentation.form.ocupacion
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -26,8 +32,10 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.input.KeyboardType
+import edu.ucne.registroocupaciones.presentation.form.empleado.EmpleadoFormUiEvent
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -37,8 +45,8 @@ fun OcupacionFormScreen(
 ){
     val state by viewModel.state.collectAsStateWithLifecycle()
 
-    LaunchedEffect(state.saved) {
-        if(state.saved)
+    LaunchedEffect(state.saved, state.deleted) {
+        if(state.saved || state.deleted)
         {
             onBack()
         }
@@ -72,16 +80,33 @@ fun OcupacionFormScreen(
                 maxLines = 5
             )
 
-            OutlinedTextField(
-                value = state.sueldo,
-                onValueChange = {viewModel.onEvent(OcupacionFormUiEvent.SueldoChanged(it))},
-                label = {Text("Sueldo")},
-                modifier = Modifier.fillMaxWidth().testTag("input_sueldo"),
-                isError = state.sueldoError != null,
-                supportingText = state.sueldoError?.let { errorMsg -> {Text(errorMsg)} },
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
-                singleLine = true
-            )
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .toggleable(
+                        value = state.esPuestoDireccion,
+                        onValueChange = { isChecked ->
+                            viewModel.onEvent(OcupacionFormUiEvent.esPuestoDireccionChanged(isChecked))
+                        },
+                        role = androidx.compose.ui.semantics.Role.Checkbox
+                    )
+                    .padding(vertical = 8.dp)
+                    .testTag("checkbox_puesto_direccion"),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Checkbox(
+                    checked = state.esPuestoDireccion,
+                    // Pasamos null aquí porque el clic ya lo maneja el 'toggleable' del Row
+                    onCheckedChange = null
+                )
+
+                Spacer(modifier = Modifier.width(8.dp))
+
+                Text(
+                    text = "¿Es un puesto de dirección?",
+                    style = MaterialTheme.typography.bodyLarge
+                )
+            }
 
             Button(
                 onClick = {viewModel.onEvent(OcupacionFormUiEvent.Save)},
@@ -96,6 +121,30 @@ fun OcupacionFormScreen(
                     )
                 } else{
                     Text("Guardar")
+                }
+            }
+
+            if (!state.isNew) {
+                Button(
+                    onClick = { viewModel.onEvent(OcupacionFormUiEvent.Delete) },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .testTag("btn_delete"),
+                    enabled = !state.isDeleting,
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = MaterialTheme.colorScheme.error,
+                        contentColor = MaterialTheme.colorScheme.onError
+                    )
+                ) {
+                    if (state.isDeleting) {
+                        CircularProgressIndicator(
+                            modifier = Modifier.size(24.dp),
+                            color = MaterialTheme.colorScheme.onError,
+                            strokeWidth = 2.dp
+                        )
+                    } else {
+                        Text("Eliminar")
+                    }
                 }
             }
         }
