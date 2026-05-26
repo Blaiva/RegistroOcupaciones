@@ -28,6 +28,7 @@ fun validarCantidadHoras(cantidadHoras: String): ValidationResult{
         cantidadHoras.isBlank() -> ValidationResult(false, "La cantidad de horas es obligatoria")
         cantidadHoras.toIntOrNull() == null -> ValidationResult(false, "La cantidad de horas debe ser un numero")
         cantidadHoras.toInt() <= 0 -> ValidationResult(false, "La cantidad de horas debe ser mayor que 0")
+        cantidadHoras.toInt() > 80 -> ValidationResult(false, "La cantidad de horas no puede ser mayor que 80")
         else -> ValidationResult(true)
     }
 }

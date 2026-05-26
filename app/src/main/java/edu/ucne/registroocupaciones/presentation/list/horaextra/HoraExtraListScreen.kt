@@ -138,7 +138,7 @@ fun HoraExtraItem(
                 )
 
                 Text(
-                    text = horaExtra.cantidadHoras.toString(),
+                    text = "${horaExtra.cantidadHoras} horas",
                     style = MaterialTheme.typography.bodyMedium
                 )
 
