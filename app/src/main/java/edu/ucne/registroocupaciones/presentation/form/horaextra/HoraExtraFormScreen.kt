@@ -48,6 +48,7 @@ import java.time.ZoneId
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HoraExtraFormScreen(
+    horaExtraId: Int,
     viewModel: HoraExtraFormViewModel = hiltViewModel(),
     onBack: () -> Unit
 ){
