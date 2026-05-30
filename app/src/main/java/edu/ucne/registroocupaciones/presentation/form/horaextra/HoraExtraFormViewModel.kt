@@ -69,7 +69,7 @@ class HoraExtraFormViewModel @Inject constructor(
         }
     }
 
-    private fun loadHoraExtra(id: Int) {
+    fun loadHoraExtra(id: Int) {
         if(id == 0 ){
             val empleados = _state.value.empleados
             _state.value = HoraExtraFormUiState(

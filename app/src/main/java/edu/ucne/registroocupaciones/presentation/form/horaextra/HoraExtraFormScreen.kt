@@ -59,6 +59,10 @@ fun HoraExtraFormScreen(
     var empleadoExpanded by remember { mutableStateOf(false) }
     var tipoExpanded by remember { mutableStateOf(false) }
 
+    LaunchedEffect(key1 = horaExtraId) {
+        viewModel.loadHoraExtra(horaExtraId)
+    }
+
     LaunchedEffect(state.saved, state.deleted) {
         if(state.saved || state.deleted){
             onBack()

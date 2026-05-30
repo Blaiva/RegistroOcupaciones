@@ -54,10 +54,10 @@ class OcupacionFormViewModel @Inject constructor(
         }
     }
 
-    private fun loadOcupacion(id: Int?)
+    fun loadOcupacion(id: Int?)
     {
         if(id == null || id == 0){
-            _state.update { it.copy(isNew = true, ocupacionId = null) }
+            _state.value = OcupacionFormUiState()
             return
         }
 
