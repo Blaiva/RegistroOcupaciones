@@ -40,10 +40,15 @@ import edu.ucne.registroocupaciones.presentation.form.empleado.EmpleadoFormUiEve
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun OcupacionFormScreen(
+    ocupacionId: Int,
     viewModel: OcupacionFormViewModel = hiltViewModel(),
     onBack: () -> Unit
 ){
     val state by viewModel.state.collectAsStateWithLifecycle()
+
+    LaunchedEffect(key1 = ocupacionId) {
+        viewModel.loadOcupacion(ocupacionId)
+    }
 
     LaunchedEffect(state.saved, state.deleted) {
         if(state.saved || state.deleted)

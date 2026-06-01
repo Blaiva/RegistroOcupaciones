@@ -82,6 +82,11 @@ dependencies {
     androidTestImplementation(libs.dagger.hilt.android.testing)
     kspAndroidTest(libs.hilt.android.compiler)
     testImplementation(libs.androidx.room.testing)
+    implementation(libs.compose.adaptive)
+    implementation(libs.compose.adaptive.layout)
+    implementation(libs.compose.adaptive.nav)
+    implementation("androidx.compose.material3:material3-adaptive-navigation-suite:1.3.0")
+    implementation("androidx.compose.material3:material3-window-size-class:1.3.0")
 
     testImplementation(libs.junit)
     androidTestImplementation(platform(libs.androidx.compose.bom))

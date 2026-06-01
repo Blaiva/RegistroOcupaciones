@@ -48,6 +48,7 @@ import java.time.ZoneId
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HoraExtraFormScreen(
+    horaExtraId: Int,
     viewModel: HoraExtraFormViewModel = hiltViewModel(),
     onBack: () -> Unit
 ){
@@ -57,6 +58,10 @@ fun HoraExtraFormScreen(
     var datePickerState = rememberDatePickerState()
     var empleadoExpanded by remember { mutableStateOf(false) }
     var tipoExpanded by remember { mutableStateOf(false) }
+
+    LaunchedEffect(key1 = horaExtraId) {
+        viewModel.loadHoraExtra(horaExtraId)
+    }
 
     LaunchedEffect(state.saved, state.deleted) {
         if(state.saved || state.deleted){

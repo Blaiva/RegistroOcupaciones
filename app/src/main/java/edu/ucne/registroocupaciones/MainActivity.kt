@@ -35,50 +35,8 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             RegistroOcupacionesTheme {
-                val navController = rememberNavController()
-                val items = listOf(
-                    TopLevelRoute("Empleado", Screen.EmpleadoList, Icons.Default.Person),
-                    TopLevelRoute("Ocupacion", Screen.OcupacionList, Icons.Default.Home),
-                    TopLevelRoute("Horas Extra", Screen.HoraExtraList, Icons.Default.DateRange)
-                )
-                Scaffold(
-                    bottomBar = {
-                        NavigationBar() {
-                            val navBackStackEntry by navController.currentBackStackEntryAsState()
-                            val currentDestination = navBackStackEntry?.destination
-
-                            items.forEach { item ->
-                                NavigationBarItem(
-                                    icon = { Icon(item.icono, contentDescription = item.nombre) },
-                                    label = { Text(item.nombre) },
-                                    selected = currentDestination?.hierarchy?.any { it.hasRoute(item.ruta::class) } == true,
-                                    onClick = {
-                                        navController.navigate(item.ruta){
-                                            popUpTo (navController.graph.findStartDestination().id ){
-                                                saveState = true
-                                            }
-                                            launchSingleTop = true
-                                            restoreState = true
-                                        }
-                                    }
-                                )
-                            }
-                        }
-                    },
-                    modifier = Modifier.fillMaxSize()
-                ) { innerPadding ->
-                    RegistroNavHost(
-                        navController = navController,
-                        innerPadding = innerPadding
-                    )
-                }
+                RegistroOcupacionesAppUI()
             }
         }
     }
 }
-
-data class TopLevelRoute<T : Any>(
-    val nombre: String,
-    val ruta: T,
-    val icono: androidx.compose.ui.graphics.vector.ImageVector
-)

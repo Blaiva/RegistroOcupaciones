@@ -45,7 +45,6 @@ class EmpleadoFormViewModel @Inject constructor(
     val state: StateFlow<EmpleadoFormUiState> = _state.asStateFlow()
 
     init {
-        loadEmpleado(empleadoId)
         loadOcupaciones()
     }
 
@@ -71,9 +70,10 @@ class EmpleadoFormViewModel @Inject constructor(
         }
     }
 
-    private fun loadEmpleado(id: Int?){
-        if(id == null || id == 0){
-            _state.update { it.copy(isNew = true, empleadoId = null) }
+    fun loadEmpleado(id: Int){
+        if( id == 0 ){
+            val ocupaciones = _state.value.ocupaciones
+            _state.value = EmpleadoFormUiState(ocupaciones = ocupaciones)
             return
         }
 

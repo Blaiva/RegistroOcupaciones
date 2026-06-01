@@ -47,7 +47,6 @@ class HoraExtraFormViewModel @Inject constructor(
     val state: StateFlow<HoraExtraFormUiState> = _state.asStateFlow()
 
     init {
-        loadHoraExtra(horaExtraId)
         loadEmpleados()
     }
 
@@ -70,9 +69,12 @@ class HoraExtraFormViewModel @Inject constructor(
         }
     }
 
-    private fun loadHoraExtra(id: Int?){
-        if(id == null || id == 0){
-            _state.update { it.copy(isNew = true, horaExtraId = null) }
+    fun loadHoraExtra(id: Int) {
+        if(id == 0 ){
+            val empleados = _state.value.empleados
+            _state.value = HoraExtraFormUiState(
+                empleados = empleados
+            )
             return
         }
 

@@ -50,6 +50,7 @@ import java.time.ZoneId
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun EmpleadoFormScreen(
+    empleadoId: Int,
     viewModel: EmpleadoFormViewModel = hiltViewModel(),
     onBack: () -> Unit
 ){
@@ -60,6 +61,10 @@ fun EmpleadoFormScreen(
     var sexoExpanded by remember { mutableStateOf(false) }
     var ocupacionExpanded by remember { mutableStateOf(false) }
     var frecuenciaPagoExpanded by remember { mutableStateOf(false) }
+
+    LaunchedEffect(key1 = empleadoId) {
+        viewModel.loadEmpleado(empleadoId)
+    }
 
     LaunchedEffect(state.saved, state.deleted) {
         if (state.saved || state.deleted){

@@ -8,6 +8,9 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import edu.ucne.registroocupaciones.presentation.adaptative.EmpleadoAdaptativeScreen
+import edu.ucne.registroocupaciones.presentation.adaptative.HoraExtraAdaptativeScreen
+import edu.ucne.registroocupaciones.presentation.adaptative.OcupacionAdaptativeScreen
 import edu.ucne.registroocupaciones.presentation.form.empleado.EmpleadoFormScreen
 import edu.ucne.registroocupaciones.presentation.form.empleado.EmpleadoFormUiEvent
 import edu.ucne.registroocupaciones.presentation.form.horaextra.HoraExtraFormScreen
@@ -19,57 +22,21 @@ import edu.ucne.registroocupaciones.presentation.list.ocupacion.OcupacionListScr
 @Composable
 fun RegistroNavHost(
     navController: NavHostController = rememberNavController(),
-    innerPadding: PaddingValues
+    innerPadding: PaddingValues = PaddingValues()
 ){
     NavHost(
         navController = navController,
         startDestination = Screen.OcupacionList,
         modifier = Modifier.padding(innerPadding)
     ){
-        composable<Screen.OcupacionList> {
-            OcupacionListScreen(
-                onAddOcupacion = {
-                    navController.navigate(Screen.OcupacionForm())
-                },
-                onEditOcupacion = { id ->
-                    navController.navigate(Screen.OcupacionForm(ocupacionId = id))
-                }
-            )
-        }
-        composable<Screen.OcupacionForm> {
-            OcupacionFormScreen (
-                onBack = { navController.navigateUp() }
-            )
-        }
-
         composable<Screen.EmpleadoList> {
-            EmpleadoListScreen (
-                onAddEmpleado = {navController.navigate(Screen.EmpleadoForm())},
-                onEditEmpleado = {id ->
-                    navController.navigate(Screen.EmpleadoForm(empleadoId = id))
-                }
-            )
+            EmpleadoAdaptativeScreen()
         }
-
-        composable<Screen.EmpleadoForm> {
-            EmpleadoFormScreen(
-                onBack = {navController.navigateUp()}
-            )
-        }
-
         composable<Screen.HoraExtraList> {
-            HoraExtraListScreen(
-                onAddHoraExtra = {navController.navigate(Screen.HoraExtraForm())},
-                onEditHoraExtra = {id ->
-                    navController.navigate(Screen.HoraExtraForm(horaExtraId = id))
-                }
-            )
+            HoraExtraAdaptativeScreen()
         }
-
-        composable<Screen.HoraExtraForm> {
-            HoraExtraFormScreen(
-                onBack = {navController.navigateUp()}
-            )
+        composable<Screen.OcupacionList> {
+            OcupacionAdaptativeScreen()
         }
     }
 }
